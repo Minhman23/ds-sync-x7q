@@ -15,6 +15,7 @@ set -a; . ./.env; set +a
 .venv/bin/python main.py              # scrape + sync
 DRY_RUN=1 .venv/bin/python main.py    # scrape only, no Gemini calls
 FILE_SEARCH_STORE=fileSearchStores/... .venv/bin/python ask.py "How do I add a YouTube video?"
+FILE_SEARCH_STORE=fileSearchStores/... .venv/bin/python chat.py   # local chat UI at http://127.0.0.1:8000
 docker build -t sync . && docker run --rm -e GEMINI_API_KEY=... sync
 ```
 
