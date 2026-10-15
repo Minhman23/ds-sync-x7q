@@ -1,0 +1,86 @@
+=== run 2026-10-15T11:23:40Z ===
+2026-10-15 11:23:49,362 INFO scraped 414 articles -> out
+Traceback (most recent call last):
+  File "/app/main.py", line 151, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/app/main.py", line 146, in main
+    sync(items)
+  File "/app/main.py", line 131, in sync
+    chunks = sum(ex.map(work, added + updated))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/main.py", line 125, in work
+    upload(client, store, it)  # upload first so the article is never missing from the store
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/main.py", line 92, in upload
+    op = client.file_search_stores.upload_to_file_search_store(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/google/genai/file_search_stores.py", line 830, in upload_to_file_search_store
+    response = self._upload_to_file_search_store(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/google/genai/file_search_stores.py", line 654, in _upload_to_file_search_store
+    response = self._api_client.request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/google/genai/_api_client.py", line 1839, in request
+    response = self._request(http_request, http_options, stream=False)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/google/genai/_api_client.py", line 1632, in _request
+    return self._retry(self._request_once, http_request, stream)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/tenacity/__init__.py", line 470, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/tenacity/__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/tenacity/__init__.py", line 413, in exc_check
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/tenacity/__init__.py", line 184, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.12/site-packages/tenacity/__init__.py", line 473, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/google/genai/_api_client.py", line 1609, in _request_once
+    errors.APIError.raise_for_response(response)
+  File "/usr/local/lib/python3.12/site-packages/google/genai/errors.py", line 173, in raise_for_response
+    cls.raise_error(response.status_code, response_json, response)
+  File "/usr/local/lib/python3.12/site-packages/google/genai/errors.py", line 204, in raise_error
+    raise ServerError(status_code, response_json, response)
+google.genai.errors.ServerError: 503 Service Unavailable. {'message': '', 'status': 'Service Unavailable'}
+exit=1
+=== run 2026-10-15T11:32:43Z ===
+2026-10-15 11:32:51,613 INFO scraped 414 articles -> out
+2026-10-15 11:39:00,323 WARNING 8899727608083-How-to-use-the-QR-Scan-to-Interact-Touchless-QR-app.md attempt 1 failed: 400 Bad Request. {'message': 'Upload has already been terminated.', 'status': 'Bad Request'}
+2026-10-15 11:41:54,374 WARNING 8899727608083-How-to-use-the-QR-Scan-to-Interact-Touchless-QR-app.md attempt 2 failed: 400 Bad Request. {'message': 'Upload has already been terminated.', 'status': 'Bad Request'}
+2026-10-15 11:44:53,677 WARNING 8899727608083-How-to-use-the-QR-Scan-to-Interact-Touchless-QR-app.md attempt 3 failed: 400 Bad Request. {'message': 'Upload has already been terminated.', 'status': 'Bad Request'}
+2026-10-15 11:45:08,678 INFO store=fileSearchStores/optibotkb-ja8ti1s8o6mp added=179 updated=0 skipped=235 failed=1 files_embedded=178 est_chunks=543
+exit=1
+=== run 2026-10-15T11:45:35Z ===
+2026-10-15 11:45:44,313 INFO scraped 414 articles -> out
+2026-10-15 11:46:19,062 INFO store=fileSearchStores/optibotkb-ja8ti1s8o6mp added=1 updated=0 skipped=413 failed=0 files_embedded=1 est_chunks=5
+exit=0
+=== run 2026-10-15T11:46:24Z ===
+2026-10-15 11:46:31,180 INFO scraped 414 articles -> out
+2026-10-15 11:46:57,306 INFO store=fileSearchStores/optibotkb-ja8ti1s8o6mp added=0 updated=0 skipped=414 failed=0 files_embedded=0 est_chunks=0
+exit=0
