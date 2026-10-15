@@ -2,3 +2,5 @@
 out/
 .venv/
 __pycache__/
+logs/
+logs-repo/
