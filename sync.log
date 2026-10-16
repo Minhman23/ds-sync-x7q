@@ -92,3 +92,7 @@ exit=0
 2026-10-15 20:00:16,579 INFO scraped 413 articles -> out
 2026-10-15 20:01:01,094 INFO store=fileSearchStores/optibotkb-ja8ti1s8o6mp added=0 updated=4 skipped=409 failed=0 files_embedded=4 est_chunks=21
 exit=0
+=== run 2026-10-16T20:00:01Z ===
+2026-10-16 20:00:14,330 INFO scraped 414 articles -> out
+2026-10-16 20:01:14,287 INFO store=fileSearchStores/optibotkb-ja8ti1s8o6mp added=1 updated=9 skipped=404 failed=0 files_embedded=10 est_chunks=48
+exit=0
