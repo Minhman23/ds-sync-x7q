@@ -1,4 +1,5 @@
 """Ask the bot via Gemini + File Search. CLI: python ask.py "How do I add a YouTube video?" (also used by chat.py)."""
+import functools
 import os
 import sys
 import time
@@ -35,9 +36,21 @@ def _generate(question):
         contents=question,
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
-            tools=[types.Tool(file_search=types.FileSearch(file_search_store_names=[os.environ["FILE_SEARCH_STORE"]]))],
+            tools=[types.Tool(file_search=types.FileSearch(file_search_store_names=[_store()]))],
         ),
     )
+
+
+@functools.cache
+def _store():
+    # Same lookup as main.py, but never creates: an empty store would answer nothing.
+    if name := os.getenv("FILE_SEARCH_STORE"):
+        return name
+    display = os.getenv("STORE_DISPLAY_NAME", "optibot-kb")
+    for s in client.file_search_stores.list():
+        if s.display_name == display:
+            return s.name
+    sys.exit(f"No File Search store named {display!r}: run main.py first")
 
 
 def _format(r, gm):

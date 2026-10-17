@@ -1,4 +1,5 @@
 """Tiny local chat UI for the bot: python chat.py -> http://127.0.0.1:8000 (API key stays server-side)."""
+import os
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -75,4 +76,5 @@ class H(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    HTTPServer(("127.0.0.1", 8000), H).serve_forever()  # localhost only: no auth
+    # localhost only (no auth); in Docker HOST=0.0.0.0 and start.sh publishes the port on 127.0.0.1 only
+    HTTPServer((os.getenv("HOST", "127.0.0.1"), 8000), H).serve_forever()

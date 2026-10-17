@@ -2,21 +2,17 @@
 
 Scrapes the Zendesk help center, converts articles to Markdown, uploads only the delta to a Gemini File Search store. Runs once and exits 0.
 
-## Setup
+## Quick start (needs only Docker)
 ```
-cp .env.sample .env   # set GEMINI_API_KEY (aistudio.google.com/apikey)
-python -m venv .venv && .venv/bin/pip install -r requirements.txt
+./start.sh        # first run creates .env: put GEMINI_API_KEY in it (aistudio.google.com/apikey), run again
 ```
+It builds the image, syncs the help center (the same job the VPS runs daily), then serves the chat UI at http://127.0.0.1:8000. The store is found by display name (`optibot-kb`) in the key's own Google project and created on the first run; set `FILE_SEARCH_STORE` only to point at a specific store.
 
-## Run locally
+## Individual commands
 ```
-set -a; . ./.env; set +a
-.venv/bin/pip install pytest && .venv/bin/python -m pytest -q   # unit tests (no network)
-.venv/bin/python main.py              # scrape + sync
-DRY_RUN=1 .venv/bin/python main.py    # scrape only, no Gemini calls
-FILE_SEARCH_STORE=fileSearchStores/... .venv/bin/python ask.py "How do I add a YouTube video?"
-FILE_SEARCH_STORE=fileSearchStores/... .venv/bin/python chat.py   # local chat UI at http://127.0.0.1:8000
-docker build -t sync . && docker run --rm -e GEMINI_API_KEY=... sync
+docker run --rm --env-file .env -e DRY_RUN=1 -v "$PWD/out:/app/out" ds-sync-x7q   # scrape only; Markdown lands in ./out
+docker run --rm --env-file .env ds-sync-x7q                                       # the daily job: scrape + delta sync, exits 0
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt pytest && .venv/bin/python -m pytest -q   # unit tests, no network
 ```
 
 ## How it works
@@ -31,4 +27,7 @@ Logs: https://github.com/Minhman23/ds-sync-x7q/blob/logs/sync.log (raw: https://
 Each run prints `added/updated/skipped/failed`; a re-run with no changes gives `added=0 updated=0 skipped=414`.
 
 ## Sample answer
+Chat UI: the last step of `./start.sh` (local only, the API key stays server-side). AI Studio has no way to attach a File Search store in its UI, and without the store the model invents links, so the bot is exercised through the same API call used by `ask.py`.
+Known limits: articles removed from the help center are not deleted from the store; chunk count is an estimate (Gemini does not return it).
+
 ![sanity check](docs/sanity-check.png)
