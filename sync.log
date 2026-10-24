@@ -124,3 +124,9 @@ exit=0
 2026-10-23 20:00:11,607 INFO scraped 415 articles -> out
 2026-10-23 20:00:45,361 INFO store=fileSearchStores/optibotkb-ja8ti1s8o6mp added=0 updated=0 skipped=415 failed=0 files_embedded=0 est_chunks=0
 exit=0
+=== run 2026-10-24T20:00:01Z ===
+Unable to find image 'ds-sync-x7q:latest' locally
+docker: Error response from daemon: pull access denied for ds-sync-x7q, repository does not exist or may require 'docker login'
+
+Run 'docker run --help' for more information
+exit=125
