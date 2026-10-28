@@ -148,3 +148,9 @@ docker: Error response from daemon: pull access denied for ds-sync-x7q, reposito
 
 Run 'docker run --help' for more information
 exit=125
+=== run 2026-10-28T20:00:01Z ===
+Unable to find image 'ds-sync-x7q:latest' locally
+docker: Error response from daemon: pull access denied for ds-sync-x7q, repository does not exist or may require 'docker login'
+
+Run 'docker run --help' for more information
+exit=125
